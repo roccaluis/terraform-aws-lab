@@ -29,6 +29,15 @@ resource "aws_vpc_security_group_ingress_rule" "bastion_ssh_ingress" {
   cidr_ipv4         = "99.153.67.105/32"
 }
 
+resource "aws_vpc_security_group_ingress_rule" "bastion_ssh_ingress_panorama" {
+  description       = "Allow SSH from the Panorama"
+  security_group_id = aws_security_group.bastion_sg.id
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_ipv4         = "54.172.11.154/32"
+}
+
 resource "aws_vpc_security_group_egress_rule" "bastion_all_egress" {
   description       = "Allow all outbound traffic"
   security_group_id = aws_security_group.bastion_sg.id
