@@ -127,6 +127,7 @@ resource "aws_subnet" "private_b2" {
   }
 }
 
+# Associate public Subnets with public Routing Table
 resource "aws_route_table_association" "pub_assoc_a1" {
   subnet_id      = aws_subnet.public_a1.id
   route_table_id = aws_route_table.public.id
