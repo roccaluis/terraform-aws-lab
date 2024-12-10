@@ -126,3 +126,23 @@ resource "aws_subnet" "private_b2" {
     Name = "private-subnet-b2"
   }
 }
+
+resource "aws_route_table_association" "pub_assoc_a1" {
+  subnet_id      = aws_subnet.public_a1.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "pub_assoc_a2" {
+  subnet_id      = aws_subnet.public_a2.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "pub_assoc_b1" {
+  subnet_id      = aws_subnet.public_b1.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "pub_assoc_b2" {
+  subnet_id      = aws_subnet.public_b2.id
+  route_table_id = aws_route_table.public.id
+}

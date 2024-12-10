@@ -1,4 +1,4 @@
 provider "aws" {
-   region     = "eu-west-2"
-   profile    = "iamadmin-general"
+  region  = "eu-west-2"
+  profile = "iamadmin-general"
 }
