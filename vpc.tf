@@ -33,33 +33,6 @@ resource "aws_route" "public_internet_access" {
   gateway_id             = aws_internet_gateway.igw.id
 }
 
-# NACL (Default-like)
-resource "aws_network_acl" "default_like" {
-  vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "allow-all"
-  }
-}
-
-resource "aws_network_acl_rule" "inbound_allow_all" {
-  network_acl_id = aws_network_acl.default_like.id
-  rule_number    = 100
-  egress         = false
-  protocol       = "-1"
-  cidr_block     = "0.0.0.0/0"
-  rule_action    = "allow"
-}
-
-resource "aws_network_acl_rule" "outbound_allow_all" {
-  network_acl_id = aws_network_acl.default_like.id
-  rule_number    = 100
-  egress         = true
-  protocol       = "-1"
-  cidr_block     = "0.0.0.0/0"
-  rule_action    = "allow"
-}
-
 # Subnets - AZ0 (eu-west-2a)
 # Public (/24) in AZ0
 resource "aws_subnet" "public_a1" {
@@ -152,68 +125,4 @@ resource "aws_subnet" "private_b2" {
   tags = {
     Name = "private-subnet-b2"
   }
-}
-
-# Route Table Associations
-# Public Subnets to Public Route Table
-resource "aws_route_table_association" "pub_assoc_a1" {
-  subnet_id      = aws_subnet.public_a1.id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table_association" "pub_assoc_a2" {
-  subnet_id      = aws_subnet.public_a2.id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table_association" "pub_assoc_b1" {
-  subnet_id      = aws_subnet.public_b1.id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table_association" "pub_assoc_b2" {
-  subnet_id      = aws_subnet.public_b2.id
-  route_table_id = aws_route_table.public.id
-}
-
-# NACL Associations
-# Associate custom NACL with all subnets
-resource "aws_network_acl_association" "public_a1_nacl" {
-  subnet_id      = aws_subnet.public_a1.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "public_a2_nacl" {
-  subnet_id      = aws_subnet.public_a2.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "private_a1_nacl" {
-  subnet_id      = aws_subnet.private_a1.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "private_a2_nacl" {
-  subnet_id      = aws_subnet.private_a2.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "public_b1_nacl" {
-  subnet_id      = aws_subnet.public_b1.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "public_b2_nacl" {
-  subnet_id      = aws_subnet.public_b2.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "private_b1_nacl" {
-  subnet_id      = aws_subnet.private_b1.id
-  network_acl_id = aws_network_acl.default_like.id
-}
-
-resource "aws_network_acl_association" "private_b2_nacl" {
-  subnet_id      = aws_subnet.private_b2.id
-  network_acl_id = aws_network_acl.default_like.id
 }
