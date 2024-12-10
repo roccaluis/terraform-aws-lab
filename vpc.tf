@@ -5,7 +5,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name = "my-custom-vpc"
+    Name = "high-lab"
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "my-vpc-igw"
+    Name = "high-lab-igw"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_network_acl" "default_like" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "default-like-nacl"
+    Name = "allow-all"
   }
 }
 
